@@ -21,7 +21,7 @@ const groups = [
       "HTML",
       "CSS",
       "Tailwind CSS",
-      "Flutter",
+      "Flutter (Basics)",
       "Vite",
     ],
   },
@@ -29,7 +29,7 @@ const groups = [
   {
     icon: Database,
     title: "Database",
-    items: ["MongoDB", "MySQL", "Oracle", "SQLite", "Firebase"],
+    items: ["MongoDB", "MySQL", "Oracle", "Neo4j", "Firebase"],
   },
   
   {
@@ -42,7 +42,7 @@ const groups = [
       "Vercel",
       "Render",
       "Netlify",
-      "Cloudinary",
+      "Cloudflare",
       "n8n",
       "Quartus",
       "Canva",
