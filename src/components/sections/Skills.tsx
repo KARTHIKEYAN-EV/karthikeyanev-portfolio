@@ -5,30 +5,72 @@ import { GlassCard } from "@/components/ui/GlassCard";
 
 const groups = [
   {
-    icon: Code2,
-    title: "Programming Languages",
-    items: ["Python", "C", "Java"],
-  },
-  {
-    icon: Globe,
-    title: "Web & App Development",
-    items: ["HTML", "CSS", "JavaScript", "TypeScript", "Flutter", "Tailwind CSS"],
-  },
-  {
-    icon: Database,
-    title: "Database",
-    items: ["MySQL", "Oracle", "MongoDB", "Neo4j", ],
-  },
-  {
-    icon: Wrench,
-    title: "Tools & Platforms",
-    items: ["GitHub", "Firebase", "n8n", "VS Code", "Android Studio", "Quartus", "Canva"],
-  },
-  {
-    icon: Sparkles,
-    title: "Soft Skills",
-    items: ["Time Management", "Team Leadership", "Problem Solving"],
-  },
+  icon: Code2,
+  title: "Programming Languages",
+  items: ["Python", "C", "Java", "JavaScript", "TypeScript"],
+},
+
+{
+  icon: Globe,
+  title: "Web & App Development",
+  items: [
+    "React.js",
+    "Node.js",
+    "Express.js",
+    "Spring Boot",
+    "HTML",
+    "CSS",
+    "Tailwind CSS",
+    "Flutter (Basics)",
+    "Vite",
+  ],
+},
+
+{
+  icon: Database,
+  title: "Database",
+  items: ["MongoDB", "MySQL", "Oracle", "Neo4j", "Firebase"],
+},
+
+{
+  icon: Wrench,
+  title: "Tools & Platforms",
+  items: [
+    "GitHub",
+    "VS Code",
+    "Android Studio",
+    "Vercel",
+    "Render",
+    "Netlify",
+    "Cloudflare",
+    "n8n",
+    "Quartus",
+    "Canva",
+  ],
+},
+
+{
+  icon: Cpu,
+  title: "Libraries & Frameworks",
+  items: ["Flask", "GTK+", "Pygame"],
+},
+
+{
+  icon: Server,
+  title: "APIs & Services",
+  items: ["Firebase Authentication", "REST API Integration"],
+},
+
+{
+  icon: Sparkles,
+  title: "Soft Skills",
+  items: [
+    "Leadership",
+    "Problem Solving",
+    "Time Management",
+    "Communication",
+  ],
+},
 ];
 
 export function Skills() {
