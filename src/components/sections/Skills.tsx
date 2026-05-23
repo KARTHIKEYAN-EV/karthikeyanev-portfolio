@@ -7,27 +7,69 @@ const groups = [
   {
     icon: Code2,
     title: "Programming Languages",
-    items: ["Python", "C", "Java"],
+    items: ["Python", "C", "Java", "JavaScript", "TypeScript"],
   },
+  
   {
     icon: Globe,
     title: "Web & App Development",
-    items: ["HTML", "CSS", "JavaScript", "TypeScript", "Flutter", "Tailwind CSS"],
+    items: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "Spring Boot",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "Flutter",
+      "Vite",
+    ],
   },
+  
   {
     icon: Database,
     title: "Database",
-    items: ["MySQL", "Oracle", "MongoDB", "Neo4j", ],
+    items: ["MongoDB", "MySQL", "Oracle", "SQLite", "Firebase"],
   },
+  
   {
     icon: Wrench,
     title: "Tools & Platforms",
-    items: ["GitHub", "Firebase", "n8n", "VS Code", "Android Studio", "Quartus", "Canva"],
+    items: [
+      "GitHub",
+      "VS Code",
+      "Android Studio",
+      "Vercel",
+      "Render",
+      "Netlify",
+      "Cloudinary",
+      "n8n",
+      "Quartus",
+      "Canva",
+    ],
   },
+  
+  {
+    icon: Cpu,
+    title: "Libraries & Frameworks",
+    items: ["Flask", "GTK+", "Pygame"],
+  },
+  
+  {
+    icon: Server,
+    title: "APIs & Services",
+    items: ["Firebase Authentication", "REST API Integration"],
+  },
+  
   {
     icon: Sparkles,
     title: "Soft Skills",
-    items: ["Time Management", "Team Leadership", "Problem Solving"],
+    items: [
+      "Leadership",
+      "Problem Solving",
+      "Time Management",
+      "Communication",
+    ],
   },
 ];
 
