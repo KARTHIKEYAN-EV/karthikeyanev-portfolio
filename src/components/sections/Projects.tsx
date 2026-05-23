@@ -59,7 +59,7 @@ const projects: Project[] = [
     features: ["Log ingestion", "Fast querying", "Incident tracking", "Alerts", "Time-series monitoring", "Sharding"],
     tech: ["MongoDB", "NoSQL"],
     github: "https://github.com/",
-    accent: "from-yellow/40 via-orange/30 to-transparent",
+    accent: "from-purple/40 via-cyan/30 to-transparent",
   },
   
   {
@@ -68,7 +68,7 @@ const projects: Project[] = [
     features: ["Battery optimization", "Priority scheduling", "Utility scoring", "Failure handling", "Dashboard", "Decision analysis"],
     tech: ["Python", "Flask", "Plotly"],
     github: "https://github.com/",
-    accent: "from-lime/40 via-green/30 to-transparent",
+    accent: "from-purple/40 via-blue/30 to-transparent",
   },
   
   {
@@ -95,7 +95,7 @@ const projects: Project[] = [
     features: ["Text encryption", "Image encryption", "Audio encryption", "Binary processing", "Animations", "Theme modes"],
     tech: ["React", "JavaScript"],
     github: "https://github.com/KARTHIKEYAN-EV/Eclipse-Cipher",
-    accent: "from-violet/40 via-fuchsia/30 to-transparent",
+    accent: "from-cyan/40 via-blue/30 to-transparent",
   },
 ];
 
