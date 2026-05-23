@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Code2, Globe, Database, Wrench, Sparkles } from "lucide-react";
+import { Code2, Globe, Database, Wrench, Sparkles, Cpu, Server } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GlassCard } from "@/components/ui/GlassCard";
 
