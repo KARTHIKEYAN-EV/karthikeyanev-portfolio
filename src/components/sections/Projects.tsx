@@ -13,11 +13,19 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "CipherGuard-Encrypter cum Decrypter",
+    desc: "Java-based cryptography tool for secure text and file encryption with multiple cipher schemes.",
+    features: ["Caesar Cipher", "XOR Cipher", "Substitution", "File encryption", "Logging", "Exception handling"],
+    tech: ["Java", "OOP"],
+    github: "https://github.com/KARTHIKEYAN-EV/Inferno-Encrypter-cum-Decrypter-CipherGuard",
+    accent: "from-purple/40 via-cyan/30 to-transparent",
+  },
+  {
     title: "Task & Habit Tracker",
     desc: "Gamified productivity app with tasks, habits, mood diary, streaks, levels, achievements, and Firebase auth.",
     features: ["Google Sign-In", "Guest mode", "Habit streaks", "Gamification", "Mood monitor", "Rewards"],
     tech: ["Flutter", "Firebase"],
-    github: "https://github.com/",
+    github: "https://github.com/KARTHIKEYAN-EV/Flutter_Task-Habit-Tracker-App",
     accent: "from-blue/40 via-cyan/30 to-transparent",
   },
   {
@@ -25,7 +33,7 @@ const projects: Project[] = [
     desc: "Comprehensive air traffic management simulation with GUI and SQLite integration.",
     features: ["Runway assignment", "Conflict detection", "Dynamic scheduling", "GTK+ UI", "Crew assignment", "Emergency mgmt"],
     tech: ["C", "GTK+", "SQLite"],
-    github: "https://github.com/",
+    github: "https://github.com/KARTHIKEYAN-EV/Air-Traffic-Scheduling",
     accent: "from-purple/40 via-blue/30 to-transparent",
   },
   {
@@ -44,13 +52,50 @@ const projects: Project[] = [
     github: "https://github.com/",
     accent: "from-blue/40 via-purple/30 to-transparent",
   },
+  
   {
-    title: "CipherGuard",
-    desc: "Java-based cryptography tool for secure text and file encryption with multiple cipher schemes.",
-    features: ["Caesar Cipher", "XOR Cipher", "Substitution", "File encryption", "Logging", "Exception handling"],
-    tech: ["Java", "OOP"],
+    title: "RT-LMS",
+    desc: "NoSQL-based real-time log management and monitoring system using MongoDB.",
+    features: ["Log ingestion", "Fast querying", "Incident tracking", "Alerts", "Time-series monitoring", "Sharding"],
+    tech: ["MongoDB", "NoSQL"],
     github: "https://github.com/",
-    accent: "from-purple/40 via-cyan/30 to-transparent",
+    accent: "from-yellow/40 via-orange/30 to-transparent",
+  },
+  
+  {
+    title: "Energy Management System",
+    desc: "AI-based smart charging and battery optimization system for multiple devices.",
+    features: ["Battery optimization", "Priority scheduling", "Utility scoring", "Failure handling", "Dashboard", "Decision analysis"],
+    tech: ["Python", "Flask", "Plotly"],
+    github: "https://github.com/",
+    accent: "from-lime/40 via-green/30 to-transparent",
+  },
+  
+  {
+    title: "EventHub",
+    desc: "Microservice-based student event management platform with role-based access.",
+    features: ["Student & faculty roles", "Event CRUD", "Responsive UI", "Authentication", "Microservices", "Dashboard"],
+    tech: ["React", "TypeScript", "Spring Boot", "MongoDB"],
+    github: "https://github.com/KARTHIKEYAN-EV/IP_mini_project",
+    accent: "from-indigo/40 via-blue/30 to-transparent",
+  },
+  
+  {
+    title: "Luminary",
+    desc: "Full-stack task management application with authentication and cloud database integration.",
+    features: ["Authentication", "Protected dashboard", "Task CRUD", "Cloud storage", "REST APIs", "Deployment"],
+    tech: ["React", "Node.js", "Express.js", "MongoDB"],
+    github: "https://github.com/KARTHIKEYAN-EV/Task-Manager-Luminary",
+    accent: "from-sky/40 via-blue/30 to-transparent",
+  },
+  
+  {
+    title: "Eclipse Cipher",
+    desc: "Frontend-based multimedia encryption and decryption platform for multiple file formats.",
+    features: ["Text encryption", "Image encryption", "Audio encryption", "Binary processing", "Animations", "Theme modes"],
+    tech: ["React", "JavaScript"],
+    github: "https://github.com/KARTHIKEYAN-EV/Eclipse-Cipher",
+    accent: "from-violet/40 via-fuchsia/30 to-transparent",
   },
 ];
 
