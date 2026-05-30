@@ -224,13 +224,15 @@ export function Internship() {
           
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {[
-                  "React",
-                  "Node.js",
-                  "Express",
-                  "MongoDB",
+                  "React.js",
+                  "Tailwind CSS",
+                  "Python",
+                  "FAST API",
+                  "PostgreSQL",
+                  "JWT-Auth",
+                  "Render",
                   "Web Development",
                   "REST APIs",
-                  "Team Collaboration",
                   "Problem Solving",
                 ].map((t) => (
                   <span
