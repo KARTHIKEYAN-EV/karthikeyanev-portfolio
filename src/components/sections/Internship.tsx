@@ -16,6 +16,15 @@ const volunteerBullets = [
   "Collaborated with peers in ACM-W events and sessions",
 ];
 
+const vniBullets = [
+  "Working as an Intern – Technology at Vijay Nicole Imprints Pvt. Ltd.",
+  "Contributing to a real-time web development project",
+  "Gaining hands-on experience in industry-level software development",
+  "Learning project workflows and problem-solving",
+  "Working with modern web technologies and professional development practices",
+  "Understanding digital publishing workflows and educational content management",
+];
+
 export function Internship() {
   return (
     <section id="internship" className="relative px-4 py-28">
@@ -151,6 +160,78 @@ export function Internship() {
                   "Teamwork",
                   "Mentoring",
                   "Community",
+                ].map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-border bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-foreground/85"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Vijay Nicole Internship Card */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="relative mt-10 pl-14 md:w-1/2 md:pl-0 md:pr-12"
+          >
+            {/* Node */}
+            <div className="absolute left-3.5 top-3 flex h-4 w-4 items-center justify-center md:left-auto md:right-[-8px]">
+              <div className="absolute inset-0 animate-ping rounded-full bg-cyan/40" />
+              <div className="relative h-3 w-3 rounded-full bg-gradient-primary shadow-glow" />
+            </div>
+          
+            <div className="glass-strong rounded-2xl p-6">
+              <div className="flex items-center gap-2 text-xs text-cyan">
+                <Briefcase size={14} /> Internship
+              </div>
+          
+              <h3 className="font-display mt-2 text-xl font-semibold">
+                Intern – Technology
+              </h3>
+          
+              <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                <span className="text-foreground">
+                  Vijay Nicole Imprints Pvt. Ltd.
+                </span>
+          
+                <span className="inline-flex items-center gap-1">
+                  <MapPin size={12} /> Chennai
+                </span>
+          
+                <span className="inline-flex items-center gap-1">
+                  <Calendar size={12} /> May 2026 – Jun 2026
+                </span>
+          
+                <span className="inline-flex items-center gap-1">
+                  On-site
+                </span>
+              </div>
+          
+              <ul className="mt-4 space-y-2 text-sm text-foreground/85">
+                {vniBullets.map((b) => (
+                  <li key={b} className="flex gap-2">
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-gradient-primary" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+          
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {[
+                  "React",
+                  "Node.js",
+                  "Express",
+                  "MongoDB",
+                  "Web Development",
+                  "REST APIs",
+                  "Team Collaboration",
+                  "Problem Solving",
                 ].map((t) => (
                   <span
                     key={t}
