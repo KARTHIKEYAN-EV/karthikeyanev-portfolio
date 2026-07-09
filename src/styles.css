@@ -194,8 +194,8 @@
 /* ========== FLOAT FAST – HUGE, VISIBLE BOB ========== */
 @keyframes float-fast-visible {
   0%, 100% { transform: translateY(0px); }
-  25%      { transform: translateY(-12px); }
-  75%      { transform: translateY(12px); }
+  25%      { transform: translateY(-6px); }
+  75%      { transform: translateY(6px); }
 }
 
 .float-fast {
@@ -506,8 +506,8 @@
 /* Diagonal float variation (different direction) */
 @keyframes float-fast-diagonal {
   0%, 100% { transform: translateY(0px) translateX(0px); }
-  25%      { transform: translateY(-12px) translateX(8px); }
-  75%      { transform: translateY(12px) translateX(-8px); }
+  25%      { transform: translateY(-6px) translateX(4px); }
+  75%      { transform: translateY(6px) translateX(-4px); }
 }
 
 /* Horizontal group hover */
