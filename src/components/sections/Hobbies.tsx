@@ -19,9 +19,13 @@ function getRandomFloatStyle() {
   return `${name} 2s ease-in-out ${delay}s infinite`;
 }
 
-/* ─── Ripple on click ─── */
+/* ─── Ripple on click (fixed – added overflow hidden check) ─── */
 function createRipple(event: React.MouseEvent<HTMLDivElement>) {
   const el = event.currentTarget;
+  // Prevent duplicate ripples
+  const existingRipple = el.querySelector(".ripple");
+  if (existingRipple) existingRipple.remove();
+
   const ripple = document.createElement("span");
   const rect = el.getBoundingClientRect();
   const size = Math.max(rect.width, rect.height);
@@ -95,12 +99,18 @@ export function Hobbies() {
                 transition-all duration-150
                 ${hoveredIndex !== null && hoveredIndex !== i ? "blur-[2px] opacity-50 scale-[0.97]" : ""}
                 ${hoveredIndex === i ? "scale-105 z-10" : ""}
+                overflow-hidden
               `}
               style={{
                 animation: floatStyles[i],
+                // Prevent the float animation from overriding hover/click transforms
+                transformOrigin: "center center",
               }}
+              // 👇 FIX: remove Framer Motion's conflicting transforms
+              whileHover={undefined}
+              whileTap={undefined}
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-primary text-background shadow-glow img-zoom-interactive transition-transform group-hover:scale-110">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-primary text-background shadow-glow img-zoom-interactive shrink-0">
                 <it.icon size={22} />
               </div>
               <span className="text-sm font-medium text-foreground/90 hover-gradient-text">
