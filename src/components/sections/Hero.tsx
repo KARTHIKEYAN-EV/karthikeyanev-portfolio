@@ -136,9 +136,13 @@ export function Hero() {
               </div>
 
               <div className="flex flex-col items-center">
-                <div className="relative flex h-32 w-32 items-center justify-center rounded-full bg-gradient-primary text-5xl font-bold text-background shadow-glow">
-                  <span className="font-display">EV</span>
-                  <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-sm opacity-0 transition-opacity duration-300" />
+                <div className="relative flex h-32 w-32 items-center justify-center rounded-full bg-gradient-primary shadow-glow">
+                  <img
+                    src="/Karthikeyan E V - karthikeyanev.jpg"
+                    alt="Karthikeyan E V"
+                    className="h-full w-full rounded-full object-cover"
+                  />
+                  <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-sm opacity-0 transition-opacity duration-300 hover:opacity-100" />
                 </div>
                 <h3 className="font-display mt-5 text-xl font-semibold">Karthikeyan E V</h3>
                 <p className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">
