@@ -10,7 +10,6 @@ const channels = [
   { icon: Instagram, label: "Instagram", value: "@karthikeyan.ev", href: "https://instagram.com/" },
 ];
 
-/* ─── Random float style generator ─── */
 function getRandomFloatStyle() {
   const isDiagonal = Math.random() > 0.5;
   const name = isDiagonal ? "float-fast-diagonal" : "float-fast-visible";
@@ -18,12 +17,10 @@ function getRandomFloatStyle() {
   return `${name} 2s ease-in-out ${delay}s infinite`;
 }
 
-/* ─── Ripple on click (fixed) ─── */
 function createRipple(event: React.MouseEvent<HTMLAnchorElement>) {
   const el = event.currentTarget;
-  // Prevent duplicate ripples
-  const existingRipple = el.querySelector(".ripple");
-  if (existingRipple) existingRipple.remove();
+  const existing = el.querySelector(".ripple");
+  if (existing) existing.remove();
 
   const ripple = document.createElement("span");
   const rect = el.getBoundingClientRect();
@@ -36,45 +33,12 @@ function createRipple(event: React.MouseEvent<HTMLAnchorElement>) {
   ripple.addEventListener("animationend", () => ripple.remove());
 }
 
-/* ─── Floating Particles ─── */
-function Particles() {
-  const particles = Array.from({ length: 15 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    animationDuration: `${Math.random() * 6 + 6}s`,
-    animationDelay: `${Math.random() * 5}s`,
-    size: `${Math.random() * 6 + 4}px`,
-  }));
-  return (
-    <div className="particles-container">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="particle"
-          style={{
-            left: p.left,
-            width: p.size,
-            height: p.size,
-            animationDuration: p.animationDuration,
-            animationDelay: p.animationDelay,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 export function Contact() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [floatStyles] = useState(() => channels.map(() => getRandomFloatStyle()));
 
   return (
     <section id="contact" className="relative px-4 py-28 overflow-hidden">
-      {/* Ambient orbs */}
-      <div className="orb" style={{ top: "10%", left: "5%", background: "var(--color-cyan)" }} />
-      <div className="orb" style={{ bottom: "10%", right: "5%", background: "var(--color-purple)" }} />
-      <Particles />
-
       <div className="mx-auto max-w-5xl">
         <SectionHeading
           eyebrow="Contact"
@@ -98,16 +62,14 @@ export function Contact() {
               className={`
                 glass-strong group relative flex items-center justify-between gap-4 rounded-2xl p-5
                 card-interactive card-3d cursor-glow-area card-glow-pulse tap-bounce
-                transition-all duration-150
+                transition-all duration-150 overflow-hidden
                 ${hoveredIndex !== null && hoveredIndex !== i ? "blur-[2px] opacity-50 scale-[0.97]" : ""}
                 ${hoveredIndex === i ? "scale-[1.02] z-10" : ""}
-                overflow-hidden
               `}
               style={{
                 animation: floatStyles[i],
                 transformOrigin: "center center",
               }}
-              // 👇 FIX: remove Framer Motion's conflicting transforms
               whileHover={undefined}
               whileTap={undefined}
             >
