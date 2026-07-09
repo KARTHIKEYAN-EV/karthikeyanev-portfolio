@@ -29,12 +29,12 @@ export function Education() {
                   <p className="mt-1 text-foreground/80">Sri Sivasubramaniya Nadar College of Engineering</p>
                   <div className="mt-2 flex flex-wrap gap-4 text-sm text-muted-foreground">
                     <span className="inline-flex items-center gap-1.5"><Calendar size={14} /> 2024 – 2028</span>
-                    <span className="inline-flex items-center gap-1.5"><Award size={14} /> CGPA: 8.901 / 10</span>
+                    <span className="inline-flex items-center gap-1.5"><Award size={14} /> CGPA: 8.84 / 10</span>
                   </div>
                 </div>
               </div>
               <div className="glass flex items-center gap-3 rounded-2xl px-5 py-4">
-                <div className="font-display text-3xl font-bold text-gradient">8.901</div>
+                <div className="font-display text-3xl font-bold text-gradient">8.84</div>
                 <div className="text-xs uppercase tracking-widest text-muted-foreground">CGPA<br/>out of 10</div>
               </div>
             </div>
