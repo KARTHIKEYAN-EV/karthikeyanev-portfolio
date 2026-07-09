@@ -6,6 +6,7 @@ export function Hero() {
   return (
     <section id="home" className="relative flex min-h-screen items-center justify-center px-4 pt-28 pb-16">
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 md:grid-cols-[1.2fr_1fr]">
+        {/* Left Column – Text & CTAs (unchanged) */}
         <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -71,7 +72,7 @@ export function Hero() {
           >
             <a
               href="#projects"
-              className="group inline-flex items-center gap-2 rounded-full bg-gradient-primary px-5 py-2.5 text-sm font-medium text-background shadow-glow transition-transform hover:scale-[1.03]"
+              className="group inline-flex items-center gap-2 rounded-full bg-gradient-primary px-5 py-2.5 text-sm font-medium text-background shadow-glow transition-transform hover:scale-[1.03] btn-shimmer"
             >
               View Projects
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
@@ -79,7 +80,7 @@ export function Hero() {
             <a
               href="/resume.pdf"
               download
-              className="glass inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-white/10"
+              className="glass inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-white/10 btn-shimmer"
             >
               <Download size={16} /> Download Resume
             </a>
@@ -104,12 +105,12 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Profile card */}
+        {/* Right Column – Profile Card (modernised) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative mx-auto w-full max-w-sm"
+          className="relative mx-auto w-full max-w-sm card-interactive card-3d cursor-glow-area"
         >
           <div className="relative aspect-[4/5] rounded-[28px] p-px">
             {/* Rotating gradient border */}
@@ -124,6 +125,7 @@ export function Hero() {
             </div>
 
             <div className="glass-strong relative flex h-full flex-col items-center justify-between rounded-[27px] p-6">
+              {/* Status bar */}
               <div className="flex w-full items-center justify-between text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5">
                   <span className="relative flex h-2 w-2">
@@ -135,14 +137,16 @@ export function Hero() {
                 <span>v1.0</span>
               </div>
 
+              {/* Avatar + Name */}
               <div className="flex flex-col items-center">
-                <div className="relative flex h-32 w-32 items-center justify-center rounded-full bg-gradient-primary shadow-glow">
+                {/* Enhanced image container with glow ring */}
+                <div className="relative flex h-32 w-32 items-center justify-center rounded-full p-[3px] shadow-[0_0_30px_-8px_var(--cyan)] transition-shadow duration-300 hover:shadow-[0_0_50px_-5px_var(--cyan)]">
+                  <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-20" />
                   <img
                     src="/Karthikeyan E V - karthikeyanev.jpg"
                     alt="Karthikeyan E V"
-                    className="h-full w-full rounded-full object-cover"
+                    className="relative z-10 h-full w-full rounded-full object-cover img-zoom-interactive"
                   />
-                  <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-sm opacity-0 transition-opacity duration-300 hover:opacity-100" />
                 </div>
                 <h3 className="font-display mt-5 text-xl font-semibold">Karthikeyan E V</h3>
                 <p className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">
@@ -150,11 +154,12 @@ export function Hero() {
                 </p>
               </div>
 
+              {/* Stats */}
               <div className="grid w-full grid-cols-3 gap-2 text-center">
                 {[
-                  { v: "8.9", l: "CGPA" },
-                  { v: "5+", l: "Projects" },
-                  { v: "1", l: "Internship" },
+                  { v: "8.84", l: "CGPA" },
+                  { v: "8+", l: "Projects" },
+                  { v: "2", l: "Internship" },
                 ].map((s) => (
                   <div key={s.l} className="rounded-xl bg-white/[0.04] p-2.5">
                     <div className="font-display text-lg font-bold text-foreground">{s.v}</div>
