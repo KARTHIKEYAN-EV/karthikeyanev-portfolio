@@ -146,3 +146,250 @@
   0%, 100% { opacity: 0.4; }
   50% { opacity: 0.7; }
 }
+
+/* ============================================
+   INTERACTIVE CARD & HOVER EFFECTS
+   ============================================ */
+
+/* 1. Base card hover effect – lift + glow */
+.card-interactive {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.4s ease,
+              border-color 0.3s ease;
+  will-change: transform, box-shadow;
+  cursor: default;
+}
+
+.card-interactive:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4),
+              0 0 0 1px var(--color-border),
+              0 0 30px -5px var(--color-cyan / 0.4);
+  border-color: transparent;
+}
+
+/* 2. Stronger pop for glass cards */
+.glass-strong.card-interactive:hover,
+.glass.card-interactive:hover {
+  background: oklch(1 0 0 / 0.08);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.5),
+              0 0 40px -5px var(--color-blue / 0.5);
+}
+
+/* 3. 3D perspective tilt (pure CSS, subtle) */
+.card-3d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.card-3d:hover {
+  transform: translateY(-6px) rotateX(2deg) rotateY(-2deg) scale(1.02);
+  box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.5),
+              0 0 40px -10px var(--color-purple / 0.4);
+}
+
+/* 4. Group hover: siblings slightly fade/recede */
+.card-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card-group > .card-interactive {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.4s ease,
+              box-shadow 0.4s ease;
+}
+
+.card-group:hover > .card-interactive:not(:hover) {
+  opacity: 0.65;
+  transform: scale(0.98);
+  filter: brightness(0.9);
+}
+
+.card-group > .card-interactive:hover {
+  opacity: 1;
+  transform: scale(1.03) translateY(-8px);
+  z-index: 10;
+}
+
+/* 5. Animated glow pulse on hover (continuous) */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px -5px var(--color-cyan / 0.4); }
+  50%      { box-shadow: 0 0 35px -5px var(--color-cyan / 0.8); }
+}
+
+.card-glow-pulse:hover {
+  animation: glow-pulse 2s infinite;
+}
+
+/* 6. Magnetic-like border on hover (gradient spin) */
+.card-border-magic {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.card-border-magic::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: conic-gradient(from 0deg, var(--color-blue), var(--color-cyan), var(--color-purple), var(--color-blue));
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: spin-slow 8s linear infinite;
+  filter: blur(8px);
+}
+
+.card-border-magic:hover::before {
+  opacity: 0.6;
+}
+
+.card-border-magic::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--color-card);
+  border-radius: calc(var(--radius-2xl) - 2px); /* adjust to your radius */
+  z-index: -1;
+}
+
+.card-border-magic > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* 7. Floating animation for background elements */
+@keyframes float-rotate {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33%      { transform: translateY(-10px) rotate(1deg); }
+  66%      { transform: translateY(10px) rotate(-1deg); }
+}
+
+.float-subtle {
+  animation: float-rotate 12s ease-in-out infinite;
+}
+
+/* 8. Cursor-triggered glow highlight (requires a parent wrapper) */
+.cursor-glow-area {
+  position: relative;
+  overflow: hidden;
+}
+
+.cursor-glow-area::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--color-cyan / 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 0;
+}
+
+.cursor-glow-area:hover::before {
+  opacity: 1;
+}
+
+.cursor-glow-area > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 9. Text gradient hover transition (for headings) */
+.hover-gradient-text {
+  background: linear-gradient(to right, var(--foreground), var(--foreground));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background 0.3s ease;
+}
+
+.hover-gradient-text:hover {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 10. Interactive scale for images (like your avatar) */
+.img-zoom-interactive {
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-zoom-interactive:hover {
+  transform: scale(1.08) rotate(1deg);
+}
+
+/* 11. Shimmer effect on hover (for buttons/links) */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.7s ease;
+}
+
+.btn-shimmer:hover::after {
+  left: 100%;
+}
+
+/* 12. Page entrance staggered keyframes (optional for pure CSS) */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.animate-fade-up:nth-child(1) { animation-delay: 0.1s; }
+.animate-fade-up:nth-child(2) { animation-delay: 0.2s; }
+.animate-fade-up:nth-child(3) { animation-delay: 0.3s; }
+.animate-fade-up:nth-child(4) { animation-delay: 0.4s; }
+.animate-fade-up:nth-child(5) { animation-delay: 0.5s; }
+
+/* 13. Soft bounce on click/tap */
+@keyframes tap-bounce {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.tap-bounce:active {
+  animation: tap-bounce 0.2s ease;
+}
+
+/* 14. Background gradient mesh (can be applied to sections) */
+.bg-mesh-interactive {
+  background-size: 200% 200%;
+  animation: mesh-move 15s ease infinite;
+}
+
+@keyframes mesh-move {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
