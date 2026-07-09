@@ -95,14 +95,14 @@ const projects: Project[] = [
   },
 ];
 
-/* ─── Draggable Card Hook ─── */
+/* ─── Draggable Hook ─── */
 function useDraggable(ref: React.RefObject<HTMLDivElement | null>) {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const startPos = useRef({ x: 0, y: 0 });
 
   const onMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault(); // avoid text selection / ghost drag
+    e.preventDefault();
     e.stopPropagation();
     setDragging(true);
     startPos.current = { x: e.clientX, y: e.clientY };
@@ -110,18 +110,15 @@ function useDraggable(ref: React.RefObject<HTMLDivElement | null>) {
 
   useEffect(() => {
     if (!dragging) return;
-
     const onMouseMove = (e: MouseEvent) => {
       const dx = e.clientX - startPos.current.x;
       const dy = e.clientY - startPos.current.y;
       setDragOffset({ x: dx, y: dy });
     };
-
     const onMouseUp = () => {
       setDragging(false);
       setDragOffset({ x: 0, y: 0 });
     };
-
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
     return () => {
@@ -214,26 +211,22 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
-/* ─── Helper to generate random float style ─── */
+/* ─── Random float style generator ─── */
 function getRandomFloatStyle() {
-  // Choose between two float animations
   const isDiagonal = Math.random() > 0.5;
-  const animationName = isDiagonal ? "float-fast-diagonal" : "float-fast-visible";
-  const delay = (Math.random() * 2).toFixed(2) + "s"; // random delay between 0 and 2 seconds
-  return {
-    animationName,
-    animationDelay: delay,
-  };
+  const name = isDiagonal ? "float-fast-diagonal" : "float-fast-visible";
+  const delay = (Math.random() * 2).toFixed(2);
+  // Full shorthand inline – guaranteed to override any CSS class conflict
+  return `${name} 2s ease-in-out ${delay}s infinite`;
 }
 
 /* ─── Draggable Card ─── */
 function DraggableCard({ project, onSelect }: { project: Project; onSelect: (p: Project) => void }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { onMouseDown, dragOffset, dragging } = useDraggable(cardRef);
-  const [floatStyle] = useState(getRandomFloatStyle); // unique float per card, generated once
+  const [floatAnimation] = useState(getRandomFloatStyle);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Only open modal if we didn't drag
     if (!dragging) {
       createRipple(e);
       onSelect(project);
@@ -245,23 +238,19 @@ function DraggableCard({ project, onSelect }: { project: Project; onSelect: (p: 
       ref={cardRef}
       onMouseDown={onMouseDown}
       onClick={handleClick}
-      className={`drag-container scroll-child w-[320px] sm:w-[380px] flex-shrink-0 mr-6 ${
-        dragging ? "" : "drag-snap"
-      }`}
+      className={`
+        drag-container scroll-child card-interactive card-3d cursor-glow-area card-glow-pulse
+        w-[320px] sm:w-[380px] flex-shrink-0 mr-6
+        ${dragging ? "" : "drag-snap"}
+      `}
       style={{
         userSelect: dragging ? "none" : "auto",
-        transform: dragging
-          ? `translate(${dragOffset.x}px, ${dragOffset.y}px)`
-          : undefined,
+        transform: dragging ? `translate(${dragOffset.x}px, ${dragOffset.y}px)` : undefined,
+        animation: floatAnimation,
       }}
     >
-      <div
-        className="group relative overflow-hidden rounded-2xl card-interactive card-3d float-fast h-full"
-        style={{
-          animationName: floatStyle.animationName,
-          animationDelay: floatStyle.animationDelay,
-        }}
-      >
+      {/* Content wrapper – no interactive classes here, all on outer */}
+      <div className="group relative overflow-hidden rounded-2xl h-full">
         <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-40 transition-opacity duration-300 group-hover:opacity-90`} />
         <div className="glass-strong relative m-px flex h-full flex-col rounded-[15px] p-6">
           <div className="flex items-start justify-between gap-4">
@@ -322,11 +311,12 @@ export function Projects() {
         <SectionHeading
           eyebrow="Projects"
           title={<>Selected <span className="text-gradient">work</span>.</>}
-          description="Drag the cards, click for details. Every card floats with its own rhythm."
+          description="Drag the cards, click for details. Each card floats with its own rhythm."
         />
 
-        <div className="scroll-container flex py-8">
-          {projects.map((p, i) => (
+        {/* Horizontal group with hover blur effect */}
+        <div className="scroll-container card-group-horizontal flex py-8">
+          {projects.map((p) => (
             <DraggableCard key={p.title} project={p} onSelect={setSelectedProject} />
           ))}
         </div>
