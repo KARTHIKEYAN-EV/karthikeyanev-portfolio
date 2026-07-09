@@ -502,3 +502,27 @@
   scroll-snap-align: start;
   flex-shrink: 0;
 }
+
+/* Diagonal float variation (different direction) */
+@keyframes float-fast-diagonal {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25%      { transform: translateY(-12px) translateX(8px); }
+  75%      { transform: translateY(12px) translateX(-8px); }
+}
+
+/* Horizontal group hover */
+.card-group-horizontal {
+  display: flex;
+  gap: 1.5rem;
+}
+.card-group-horizontal > .card-interactive {
+  transition: filter 0.15s ease, opacity 0.15s ease;
+}
+.card-group-horizontal:hover > .card-interactive:not(:hover) {
+  opacity: 0.55;
+  filter: brightness(0.8) blur(0.8px);
+}
+.card-group-horizontal > .card-interactive:hover {
+  opacity: 1;
+  z-index: 10;
+}
