@@ -116,18 +116,21 @@ export function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55, delay: (i % 2) * 0.08 }}
-              className="group relative overflow-hidden rounded-2xl"
+              // ========== ENHANCED INTERACTIVE CLASSES ==========
+              className="group relative overflow-hidden rounded-2xl card-interactive card-3d float-fast"
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${p.accent} opacity-40 transition-opacity duration-500 group-hover:opacity-90`} />
+              <div className={`absolute inset-0 bg-gradient-to-br ${p.accent} opacity-40 transition-opacity duration-300 group-hover:opacity-90`} />
               <div className="glass-strong relative m-px flex h-full flex-col rounded-[15px] p-6">
                 <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-display text-xl font-semibold tracking-tight">{p.title}</h3>
+                  <h3 className="font-display text-xl font-semibold tracking-tight hover-gradient-text">
+                    {p.title}
+                  </h3>
                   <a
                     href={p.github}
                     target="_blank"
                     rel="noreferrer"
                     aria-label="View on GitHub"
-                    className="glass flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-all hover:scale-110 hover:text-foreground"
+                    className="glass flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-all hover:scale-110 hover:text-foreground btn-shimmer tap-bounce"
                   >
                     <Github size={15} />
                   </a>
@@ -147,7 +150,7 @@ export function Projects() {
                     {p.tech.map((t) => (
                       <span
                         key={t}
-                        className="rounded-full border border-border bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-foreground/85"
+                        className="rounded-full border border-border bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-foreground/85 btn-shimmer"
                       >
                         {t}
                       </span>
@@ -157,7 +160,7 @@ export function Projects() {
                     href={p.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-medium text-foreground/80 transition-colors hover:text-foreground"
+                    className="inline-flex items-center gap-1 text-xs font-medium text-foreground/80 transition-colors hover:text-foreground btn-shimmer"
                   >
                     Source <ArrowUpRight size={13} />
                   </a>
