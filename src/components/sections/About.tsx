@@ -20,12 +20,13 @@ export function About() {
           title={<>Engineering with <span className="text-gradient">intent</span>.</>}
         />
         <div className="grid items-start gap-8 md:grid-cols-[1.1fr_1fr]">
+          {/* Main description card with interactive lift */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6 }}
-            className="glass rounded-2xl p-8"
+            className="glass rounded-2xl p-8 card-interactive card-3d"
           >
             <p className="text-lg leading-relaxed text-foreground/90">
               I'm an active Computer Science Engineering student with a strong foundation in
@@ -42,7 +43,7 @@ export function About() {
               {["Open to internships", "Full Stack", "MERN", "Flutter"].map((t) => (
                 <span
                   key={t}
-                  className="rounded-full border border-border bg-white/[0.04] px-3 py-1 text-xs text-muted-foreground"
+                  className="rounded-full border border-border bg-white/[0.04] px-3 py-1 text-xs text-muted-foreground btn-shimmer"
                 >
                   {t}
                 </span>
@@ -50,7 +51,8 @@ export function About() {
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {/* Value cards grid with group hover effect and individual pop */}
+          <div className="card-group grid grid-cols-1 gap-3 sm:grid-cols-2">
             {values.map((v, i) => (
               <motion.div
                 key={v.label}
@@ -59,11 +61,11 @@ export function About() {
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
               >
-                <GlassCard className="h-full p-5" glow>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-primary text-background shadow-glow">
+                <GlassCard className="h-full p-5 card-interactive card-3d" glow>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-primary text-background shadow-glow img-zoom-interactive">
                     <v.icon size={18} />
                   </div>
-                  <h4 className="font-display mt-3 text-base font-semibold">{v.label}</h4>
+                  <h4 className="font-display mt-3 text-base font-semibold hover-gradient-text">{v.label}</h4>
                   <p className="mt-1 text-sm text-muted-foreground">{v.desc}</p>
                 </GlassCard>
               </motion.div>
