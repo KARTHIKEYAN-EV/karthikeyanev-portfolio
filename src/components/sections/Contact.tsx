@@ -18,9 +18,13 @@ function getRandomFloatStyle() {
   return `${name} 2s ease-in-out ${delay}s infinite`;
 }
 
-/* ─── Ripple on click ─── */
+/* ─── Ripple on click (fixed) ─── */
 function createRipple(event: React.MouseEvent<HTMLAnchorElement>) {
   const el = event.currentTarget;
+  // Prevent duplicate ripples
+  const existingRipple = el.querySelector(".ripple");
+  if (existingRipple) existingRipple.remove();
+
   const ripple = document.createElement("span");
   const rect = el.getBoundingClientRect();
   const size = Math.max(rect.width, rect.height);
@@ -92,16 +96,23 @@ export function Contact() {
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={createRipple}
               className={`
-                glass-strong group relative flex items-center justify-between gap-4 overflow-hidden rounded-2xl p-5
+                glass-strong group relative flex items-center justify-between gap-4 rounded-2xl p-5
                 card-interactive card-3d cursor-glow-area card-glow-pulse tap-bounce
                 transition-all duration-150
                 ${hoveredIndex !== null && hoveredIndex !== i ? "blur-[2px] opacity-50 scale-[0.97]" : ""}
                 ${hoveredIndex === i ? "scale-[1.02] z-10" : ""}
+                overflow-hidden
               `}
-              style={{ animation: floatStyles[i] }}
+              style={{
+                animation: floatStyles[i],
+                transformOrigin: "center center",
+              }}
+              // 👇 FIX: remove Framer Motion's conflicting transforms
+              whileHover={undefined}
+              whileTap={undefined}
             >
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-primary text-background shadow-glow img-zoom-interactive">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-primary text-background shadow-glow img-zoom-interactive shrink-0">
                   <c.icon size={20} />
                 </div>
                 <div>
@@ -111,7 +122,7 @@ export function Contact() {
               </div>
               <ArrowUpRight
                 size={18}
-                className="text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
+                className="text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground shrink-0"
               />
             </motion.a>
           ))}
