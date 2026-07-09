@@ -148,48 +148,53 @@
 }
 
 /* ============================================
-   INTERACTIVE CARD & HOVER EFFECTS
+   FAST & POPPY INTERACTIVE CARD EFFECTS
    ============================================ */
 
-/* 1. Base card hover effect – lift + glow */
+/* 1. Base card hover – quick lift with spring-like bounce */
 .card-interactive {
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.4s ease,
-              border-color 0.3s ease;
+  transition:
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.2s ease,
+    border-color 0.15s ease;
   will-change: transform, box-shadow;
-  cursor: default;
+  cursor: pointer;
 }
 
 .card-interactive:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4),
-              0 0 0 1px var(--color-border),
-              0 0 30px -5px var(--color-cyan / 0.4);
+  transform: translateY(-8px) scale(1.04);
+  box-shadow:
+    0 25px 45px -10px rgba(0, 0, 0, 0.6),
+    0 0 0 1px var(--color-cyan / 0.6),
+    0 0 40px -5px var(--color-cyan / 0.7);
   border-color: transparent;
 }
 
-/* 2. Stronger pop for glass cards */
+/* 2. Glass cards – stronger pop & immediate glow */
 .glass-strong.card-interactive:hover,
 .glass.card-interactive:hover {
-  background: oklch(1 0 0 / 0.08);
-  backdrop-filter: blur(24px) saturate(180%);
-  box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.5),
-              0 0 40px -5px var(--color-blue / 0.5);
+  background: oklch(1 0 0 / 0.1);
+  backdrop-filter: blur(28px) saturate(190%);
+  box-shadow:
+    0 30px 55px -15px rgba(0, 0, 0, 0.7),
+    0 0 50px -5px var(--color-purple / 0.8);
 }
 
-/* 3. 3D perspective tilt (pure CSS, subtle) */
+/* 3. 3D tilt – fast and tight */
 .card-3d {
   perspective: 1000px;
   transform-style: preserve-3d;
+  transition: transform 0.2s ease;
 }
 
 .card-3d:hover {
-  transform: translateY(-6px) rotateX(2deg) rotateY(-2deg) scale(1.02);
-  box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.5),
-              0 0 40px -10px var(--color-purple / 0.4);
+  transform: translateY(-8px) rotateX(3deg) rotateY(-3deg) scale(1.04);
+  box-shadow:
+    0 35px 55px -20px rgba(0, 0, 0, 0.7),
+    0 0 50px -8px var(--color-purple / 0.7);
 }
 
-/* 4. Group hover: siblings slightly fade/recede */
+/* 4. Group hover – aggressive focus, others recede fast */
 .card-group {
   display: flex;
   flex-direction: column;
@@ -197,34 +202,36 @@
 }
 
 .card-group > .card-interactive {
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              opacity 0.4s ease,
-              box-shadow 0.4s ease;
+  transition:
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.15s ease;
 }
 
 .card-group:hover > .card-interactive:not(:hover) {
-  opacity: 0.65;
-  transform: scale(0.98);
-  filter: brightness(0.9);
+  opacity: 0.55;
+  transform: scale(0.96);
+  filter: brightness(0.8) blur(0.5px);
 }
 
 .card-group > .card-interactive:hover {
   opacity: 1;
-  transform: scale(1.03) translateY(-8px);
+  transform: scale(1.06) translateY(-10px);
   z-index: 10;
 }
 
-/* 5. Animated glow pulse on hover (continuous) */
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px -5px var(--color-cyan / 0.4); }
-  50%      { box-shadow: 0 0 35px -5px var(--color-cyan / 0.8); }
+/* 5. Instant glow pulse – rapid breathing glow */
+@keyframes glow-pulse-fast {
+  0%, 100% { box-shadow: 0 0 25px -5px var(--color-cyan / 0.5); }
+  50%      { box-shadow: 0 0 45px -5px var(--color-cyan / 1); }
 }
 
 .card-glow-pulse:hover {
-  animation: glow-pulse 2s infinite;
+  animation: glow-pulse-fast 1s ease-in-out infinite;
 }
 
-/* 6. Magnetic-like border on hover (gradient spin) */
+/* 6. Magnetic border – fast reveal, spin stays but quick */
 .card-border-magic {
   position: relative;
   overflow: hidden;
@@ -239,13 +246,13 @@
   background: conic-gradient(from 0deg, var(--color-blue), var(--color-cyan), var(--color-purple), var(--color-blue));
   border-radius: inherit;
   opacity: 0;
-  transition: opacity 0.4s ease;
-  animation: spin-slow 8s linear infinite;
-  filter: blur(8px);
+  transition: opacity 0.2s ease;
+  animation: spin-slow 6s linear infinite; /* slightly faster spin */
+  filter: blur(6px);
 }
 
 .card-border-magic:hover::before {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .card-border-magic::after {
@@ -253,7 +260,7 @@
   position: absolute;
   inset: 1px;
   background: var(--color-card);
-  border-radius: calc(var(--radius-2xl) - 2px); /* adjust to your radius */
+  border-radius: inherit;
   z-index: -1;
 }
 
@@ -262,18 +269,18 @@
   z-index: 2;
 }
 
-/* 7. Floating animation for background elements */
-@keyframes float-rotate {
+/* 7. Fast floating rotation – quicker wriggle */
+@keyframes float-rotate-fast {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  33%      { transform: translateY(-10px) rotate(1deg); }
-  66%      { transform: translateY(10px) rotate(-1deg); }
+  25%      { transform: translateY(-6px) rotate(1deg); }
+  75%      { transform: translateY(6px) rotate(-1deg); }
 }
 
 .float-subtle {
-  animation: float-rotate 12s ease-in-out infinite;
+  animation: float-rotate-fast 8s ease-in-out infinite;
 }
 
-/* 8. Cursor-triggered glow highlight (requires a parent wrapper) */
+/* 8. Cursor glow – instant on */
 .cursor-glow-area {
   position: relative;
   overflow: hidden;
@@ -282,16 +289,16 @@
 .cursor-glow-area::before {
   content: '';
   position: absolute;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, var(--color-cyan / 0.15) 0%, transparent 70%);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, var(--color-cyan / 0.25) 0%, transparent 70%);
   border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.15s;
   z-index: 0;
 }
 
@@ -304,13 +311,13 @@
   z-index: 1;
 }
 
-/* 9. Text gradient hover transition (for headings) */
+/* 9. Text gradient – snap transition */
 .hover-gradient-text {
   background: linear-gradient(to right, var(--foreground), var(--foreground));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  transition: background 0.3s ease;
+  transition: background 0.2s ease;
 }
 
 .hover-gradient-text:hover {
@@ -320,16 +327,16 @@
   color: transparent;
 }
 
-/* 10. Interactive scale for images (like your avatar) */
+/* 10. Image zoom – tight spring */
 .img-zoom-interactive {
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .img-zoom-interactive:hover {
-  transform: scale(1.08) rotate(1deg);
+  transform: scale(1.12) rotate(2deg);
 }
 
-/* 11. Shimmer effect on hover (for buttons/links) */
+/* 11. Shimmer button – swift sweep */
 .btn-shimmer {
   position: relative;
   overflow: hidden;
@@ -342,54 +349,39 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  transition: left 0.7s ease;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.4s ease;
 }
 
 .btn-shimmer:hover::after {
   left: 100%;
 }
 
-/* 12. Page entrance staggered keyframes (optional for pure CSS) */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* 12. Page entrance – quick and bouncy */
+@keyframes fadeUpBounce {
+  0%   { opacity: 0; transform: translateY(40px); }
+  60%  { opacity: 1; transform: translateY(-5px); }
+  80%  { transform: translateY(2px); }
+  100% { transform: translateY(0); }
 }
 
 .animate-fade-up {
-  animation: fadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: fadeUpBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-.animate-fade-up:nth-child(1) { animation-delay: 0.1s; }
-.animate-fade-up:nth-child(2) { animation-delay: 0.2s; }
-.animate-fade-up:nth-child(3) { animation-delay: 0.3s; }
-.animate-fade-up:nth-child(4) { animation-delay: 0.4s; }
-.animate-fade-up:nth-child(5) { animation-delay: 0.5s; }
+.animate-fade-up:nth-child(1) { animation-delay: 0.05s; }
+.animate-fade-up:nth-child(2) { animation-delay: 0.1s; }
+.animate-fade-up:nth-child(3) { animation-delay: 0.15s; }
+.animate-fade-up:nth-child(4) { animation-delay: 0.2s; }
+.animate-fade-up:nth-child(5) { animation-delay: 0.25s; }
 
-/* 13. Soft bounce on click/tap */
-@keyframes tap-bounce {
+/* 13. Hard tap bounce – instant feedback */
+@keyframes tap-bounce-pop {
   0%   { transform: scale(1); }
-  50%  { transform: scale(0.95); }
+  40%  { transform: scale(0.9); }
   100% { transform: scale(1); }
 }
 
 .tap-bounce:active {
-  animation: tap-bounce 0.2s ease;
-}
-
-/* 14. Background gradient mesh (can be applied to sections) */
-.bg-mesh-interactive {
-  background-size: 200% 200%;
-  animation: mesh-move 15s ease infinite;
-}
-
-@keyframes mesh-move {
-  0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
+  animation: tap-bounce-pop 0.15s ease;
 }
