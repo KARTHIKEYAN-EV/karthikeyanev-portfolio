@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { Github, ArrowUpRight } from "lucide-react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Github, ArrowUpRight, X } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 type Project = {
@@ -8,7 +9,7 @@ type Project = {
   features: string[];
   tech: string[];
   github?: string;
-  accent: string; // tailwind gradient classes
+  accent: string;
 };
 
 const projects: Project[] = [
@@ -52,7 +53,6 @@ const projects: Project[] = [
     github: "https://github.com/",
     accent: "from-blue/40 via-purple/30 to-transparent",
   },
-  
   {
     title: "RT-LMS",
     desc: "NoSQL-based real-time log management and monitoring system using MongoDB.",
@@ -61,7 +61,6 @@ const projects: Project[] = [
     github: "https://github.com/",
     accent: "from-cyan/40 via-blue/30 to-transparent",
   },
-  
   {
     title: "Energy Management System",
     desc: "AI-based smart charging and battery optimization system for multiple devices.",
@@ -70,7 +69,6 @@ const projects: Project[] = [
     github: "https://github.com/",
     accent: "from-purple/40 via-cyan/30 to-transparent",
   },
-  
   {
     title: "EventHub",
     desc: "Microservice-based student event management platform with role-based access.",
@@ -79,7 +77,6 @@ const projects: Project[] = [
     github: "https://github.com/KARTHIKEYAN-EV/IP_mini_project",
     accent: "from-indigo/40 via-blue/30 to-transparent",
   },
-  
   {
     title: "Luminary",
     desc: "Full-stack task management application with authentication and cloud database integration.",
@@ -88,7 +85,6 @@ const projects: Project[] = [
     github: "https://github.com/KARTHIKEYAN-EV/Task-Manager-Luminary",
     accent: "from-sky/40 via-blue/30 to-transparent",
   },
-  
   {
     title: "Eclipse Cipher",
     desc: "Frontend-based multimedia encryption and decryption platform for multiple file formats.",
@@ -99,77 +95,223 @@ const projects: Project[] = [
   },
 ];
 
-export function Projects() {
+/* ─── Draggable Card Hook ─── */
+function useDraggable(ref: React.RefObject<HTMLDivElement | null>) {
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const startPos = useRef({ x: 0, y: 0 });
+
+  const onMouseDown = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDragging(true);
+    startPos.current = { x: e.clientX, y: e.clientY };
+  }, []);
+
+  useEffect(() => {
+    if (!dragging) return;
+    const onMouseMove = (e: MouseEvent) => {
+      const dx = e.clientX - startPos.current.x;
+      const dy = e.clientY - startPos.current.y;
+      setDragOffset({ x: dx, y: dy });
+    };
+    const onMouseUp = () => {
+      setDragging(false);
+      setDragOffset({ x: 0, y: 0 });
+    };
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [dragging]);
+
+  return { onMouseDown, dragOffset, dragging };
+}
+
+/* ─── Ripple Effect ─── */
+function createRipple(event: React.MouseEvent<HTMLDivElement>) {
+  const el = event.currentTarget;
+  const ripple = document.createElement("span");
+  const rect = el.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  ripple.style.width = ripple.style.height = `${size}px`;
+  ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+  ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+  ripple.className = "ripple";
+  el.appendChild(ripple);
+  ripple.addEventListener("animationend", () => ripple.remove());
+}
+
+/* ─── Floating Particles Background ─── */
+function Particles() {
+  const particles = Array.from({ length: 25 }, (_, i) => ({
+    id: i,
+    left: `${Math.random() * 100}%`,
+    animationDuration: `${Math.random() * 6 + 6}s`,
+    animationDelay: `${Math.random() * 5}s`,
+    size: `${Math.random() * 6 + 4}px`,
+  }));
   return (
-    <section id="projects" className="relative px-4 py-28">
-      <div className="mx-auto max-w-6xl">
+    <div className="particles-container">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="particle"
+          style={{
+            left: p.left,
+            width: p.size,
+            height: p.size,
+            animationDuration: p.animationDuration,
+            animationDelay: p.animationDelay,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ─── Modal ─── */
+function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  return (
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal-content relative" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}><X size={20} /></button>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="w-full md:w-1/3 flex justify-center">
+            <div className="w-48 h-48 rounded-full bg-gradient-primary flex items-center justify-center shadow-glow img-zoom-interactive">
+              <span className="text-4xl font-display text-background">{project.title.charAt(0)}</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h2 className="font-display text-2xl font-bold text-gradient">{project.title}</h2>
+            <p className="mt-2 text-muted-foreground">{project.desc}</p>
+            <ul className="mt-4 grid grid-cols-2 gap-y-1.5 text-sm">
+              {project.features.map((f) => (
+                <li key={f} className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gradient-primary" /> {f}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {project.tech.map((t) => (
+                <span key={t} className="rounded-full border border-border bg-white/[0.04] px-3 py-1 text-xs">{t}</span>
+              ))}
+            </div>
+            {project.github && (
+              <a href={project.github} target="_blank" className="mt-4 inline-flex items-center gap-1 text-sm text-cyan hover:underline">
+                View on GitHub <ArrowUpRight size={14} />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Draggable Card ─── */
+function DraggableCard({ project, onSelect }: { project: Project; onSelect: (p: Project) => void }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { onMouseDown, dragOffset, dragging } = useDraggable(cardRef);
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!dragging) {
+      createRipple(e);
+      onSelect(project);
+    }
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseDown={onMouseDown}
+      onClick={handleClick}
+      className={`drag-container scroll-child w-[320px] sm:w-[380px] flex-shrink-0 mr-6 ${
+        dragging ? "" : "drag-snap"
+      }`}
+      style={{
+        transform: dragging
+          ? `translate(${dragOffset.x}px, ${dragOffset.y}px)`
+          : undefined,
+      }}
+    >
+      <div className={`group relative overflow-hidden rounded-2xl card-interactive card-3d float-fast h-full`}>
+        <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-40 transition-opacity duration-300 group-hover:opacity-90`} />
+        <div className="glass-strong relative m-px flex h-full flex-col rounded-[15px] p-6">
+          <div className="flex items-start justify-between gap-4">
+            <h3 className="font-display text-xl font-semibold tracking-tight hover-gradient-text">{project.title}</h3>
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="glass flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:scale-110 hover:text-foreground btn-shimmer tap-bounce"
+            >
+              <Github size={15} />
+            </a>
+          </div>
+          <p className="mt-2 text-sm text-muted-foreground">{project.desc}</p>
+          <ul className="mt-4 grid grid-cols-2 gap-y-1.5 text-xs text-foreground/80">
+            {project.features.map((f) => (
+              <li key={f} className="flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-gradient-primary" /> {f}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 pt-4">
+            <div className="flex flex-wrap gap-1.5">
+              {project.tech.map((t) => (
+                <span key={t} className="rounded-full border border-border bg-white/[0.04] px-2.5 py-0.5 text-[11px] btn-shimmer">
+                  {t}
+                </span>
+              ))}
+            </div>
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1 text-xs font-medium hover:text-foreground btn-shimmer"
+            >
+              Source <ArrowUpRight size={13} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Projects() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  return (
+    <section id="projects" className="relative px-4 py-28 overflow-hidden">
+      {/* Ambient orbs */}
+      <div className="orb" style={{ top: "10%", left: "5%", background: "var(--color-cyan)" }} />
+      <div className="orb" style={{ bottom: "10%", right: "5%", background: "var(--color-purple)" }} />
+      <Particles />
+
+      <div className="mx-auto max-w-full">
         <SectionHeading
           eyebrow="Projects"
           title={<>Selected <span className="text-gradient">work</span>.</>}
-          description="A snapshot of things I've shipped — from full-stack apps to systems-level builds."
+          description="Drag the cards, click for details. Every card floats alive."
         />
-        <div className="grid gap-6 md:grid-cols-2">
+
+        <div className="scroll-container flex py-8">
           {projects.map((p, i) => (
-            <motion.article
-              key={p.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: (i % 2) * 0.08 }}
-              // ========== ENHANCED INTERACTIVE CLASSES ==========
-              className="group relative overflow-hidden rounded-2xl card-interactive card-3d float-fast"
-            >
-              <div className={`absolute inset-0 bg-gradient-to-br ${p.accent} opacity-40 transition-opacity duration-300 group-hover:opacity-90`} />
-              <div className="glass-strong relative m-px flex h-full flex-col rounded-[15px] p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-display text-xl font-semibold tracking-tight hover-gradient-text">
-                    {p.title}
-                  </h3>
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="View on GitHub"
-                    className="glass flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-all hover:scale-110 hover:text-foreground btn-shimmer tap-bounce"
-                  >
-                    <Github size={15} />
-                  </a>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-
-                <ul className="mt-4 grid grid-cols-2 gap-y-1.5 text-xs text-foreground/80">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-center gap-1.5">
-                      <span className="h-1 w-1 rounded-full bg-gradient-primary" /> {f}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-5 flex flex-wrap items-center justify-between gap-3 pt-4">
-                  <div className="flex flex-wrap gap-1.5">
-                    {p.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-border bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-foreground/85 btn-shimmer"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-medium text-foreground/80 transition-colors hover:text-foreground btn-shimmer"
-                  >
-                    Source <ArrowUpRight size={13} />
-                  </a>
-                </div>
-              </div>
-            </motion.article>
+            <DraggableCard key={p.title} project={p} onSelect={setSelectedProject} />
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
